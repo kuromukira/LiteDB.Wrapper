@@ -14,11 +14,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>E:\DEV\LiteDB.Wrapper\LiteDB.Wrapper\LiteDB.Wrapper\LiteDB.Wrapper.xml</DocumentationFile>
+    <DocumentationFile>LiteDB.Wrapper\LiteDB.Wrapper.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>E:\DEV\LiteDB.Wrapper\LiteDB.Wrapper\LiteDB.Wrapper\LiteDB.Wrapper.xml</DocumentationFile>
+    <DocumentationFile>LiteDB.Wrapper\LiteDB.Wrapper.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
