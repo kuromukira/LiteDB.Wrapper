@@ -360,3 +360,5 @@ netcore/obj/
 *.cache
 
 *.vscode
+
+*.db

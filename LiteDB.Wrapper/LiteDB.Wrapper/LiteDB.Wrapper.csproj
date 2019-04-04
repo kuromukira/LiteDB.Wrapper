@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <Authors>Nor Gelera</Authors>
+    <Description>A simpler way to use LiteDB.</Description>
+    <Copyright>Nor Gelera 2019</Copyright>
+    <PackageProjectUrl>https://github.com/norgelera/LiteDB.Wrapper</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/norgelera/LiteDB.Wrapper</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>litedb lite db wrapper simple nosql</PackageTags>
+    <PackageReleaseNotes>Initial Release.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>E:\DEV\LiteDB.Wrapper\LiteDB.Wrapper\LiteDB.Wrapper\LiteDB.Wrapper.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LiteDB" Version="4.1.4" />
+  </ItemGroup>
+
+</Project>

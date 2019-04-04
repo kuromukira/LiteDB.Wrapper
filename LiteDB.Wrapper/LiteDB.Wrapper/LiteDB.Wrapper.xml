@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LiteDB.Wrapper</name>
+    </assembly>
+    <members>
+        <member name="T:LiteDB.Wrapper.SortOptions">
+            <summary>Collection Sort Options</summary>
+        </member>
+        <member name="T:LiteDB.Wrapper.SortOptions.Order">
+            <summary></summary>
+        </member>
+        <member name="F:LiteDB.Wrapper.SortOptions.Order.ASC">
+            <summary>Ascending</summary>
+        </member>
+        <member name="F:LiteDB.Wrapper.SortOptions.Order.DSC">
+            <summary>Descending</summary>
+        </member>
+        <member name="P:LiteDB.Wrapper.SortOptions.Sort">
+            <summary>Ascending or Descending. Default is DSC</summary>
+        </member>
+        <member name="P:LiteDB.Wrapper.SortOptions.Field">
+            <summary>Sort Field</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.SortOptions.#ctor(System.String)">
+            <summary></summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.SortOptions.#ctor(LiteDB.Wrapper.SortOptions.Order,System.String)">
+            <summary></summary>
+        </member>
+        <member name="T:LiteDB.Wrapper.PageOptions">
+            <summary>Collection Pagination Options</summary>
+        </member>
+        <member name="P:LiteDB.Wrapper.PageOptions.Offset">
+            <summary>Page offset</summary>
+        </member>
+        <member name="P:LiteDB.Wrapper.PageOptions.Rows">
+            <summary>Total # of rows to fetch per page</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.PageOptions.#ctor(System.Int32,System.Int32)">
+            <summary></summary>
+        </member>
+        <member name="T:LiteDB.Wrapper.CollectionReferenceConfig">
+            <summary>Configuration for LiteDB.Wrapper</summary>
+        </member>
+        <member name="P:LiteDB.Wrapper.CollectionReferenceConfig.Location">
+            <summary>LiteDB file location</summary>
+        </member>
+        <member name="P:LiteDB.Wrapper.CollectionReferenceConfig.Collection">
+            <summary>Collection name for reference</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.CollectionReferenceConfig.#ctor(System.String,System.String)">
+            <summary></summary>
+        </member>
+        <member name="T:LiteDB.Wrapper.CollectionReference`1">
+            <summary></summary>
+        </member>
+        <member name="P:LiteDB.Wrapper.CollectionReference`1.Config">
+            <summary>Configuration for LiteDB.Wrapper</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.#ctor(System.String,System.String)">
+            <summary></summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.Insert(`0)">
+            <summary>Insert an object to the referenced collection.</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.Insert(System.Collections.Generic.IList{`0})">
+            <summary>Insert a list of objects to the referenced collection.</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.Update(`0)">
+            <summary>Update an object in the referenced collection.</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.Update(System.Collections.Generic.IList{`0})">
+            <summary>Update a list of objects in the referenced collection.</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.Remove(System.Guid)">
+            <summary>Remove an object that matches the given id.</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.Remove(System.Collections.Generic.IList{System.Guid})">
+            <summary>Remove a list of objects that matches the given ids.</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.Get(System.Guid)">
+            <summary>Get an item from the referenced collection.</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.GetPaged(LiteDB.Wrapper.PageOptions,LiteDB.Wrapper.SortOptions)">
+            <summary>Get a paginated list of items from the referenced collection.</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.Drop">
+            <summary>Explicitly drop currenct collection.</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.Dispose(System.Boolean)">
+            <summary></summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.Dispose">
+            <summary></summary>
+        </member>
+    </members>
+</doc>
