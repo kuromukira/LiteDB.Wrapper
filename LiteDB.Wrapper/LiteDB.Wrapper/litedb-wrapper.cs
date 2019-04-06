@@ -83,14 +83,14 @@ namespace LiteDB.Wrapper
         public CollectionReference(string location, string collection) => Config = new CollectionReferenceConfig(location, collection);
 
         /// <summary>Insert an object to the referenced collection.</summary>
-        public void Add(T obj) => ToSave.Add(obj);
+        public void Insert(T obj) => ToSave.Add(obj);
         /// <summary>Insert a list of objects to the referenced collection.</summary>
-        public void Add(IList<T> objs) => ToSave = ToSave.Concat(objs).ToList();
+        public void Insert(IList<T> objs) => ToSave = ToSave.Concat(objs).ToList();
 
         /// <summary>Update an object in the referenced collection.</summary>
-        public void Modify(T obj) => ToModify.Add(obj);
+        public void Update(T obj) => ToModify.Add(obj);
         /// <summary>Update a list of objects in the referenced collection.</summary>
-        public void Modify(IList<T> objs) => ToModify = ToModify.Concat(objs).ToList();
+        public void Update(IList<T> objs) => ToModify = ToModify.Concat(objs).ToList();
 
         /// <summary>Remove an object that matches the given id.</summary>
         public void Remove(Guid id) => ToRemove.Add(id);

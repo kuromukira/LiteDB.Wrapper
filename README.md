@@ -19,10 +19,10 @@ CollectionReference<YourModel> reference = new  CollectionReference<YourModel>("
 
 Available methods
 ```c#
-Add(T)
-Add(IList<T>)
-Modify(T)
-Modify(IList<T>)
+Insert(T)
+Insert(IList<T>)
+Update(T)
+Update(IList<T>)
 Remove(Guid)
 Remove(IList<Guid>)
 Commit()

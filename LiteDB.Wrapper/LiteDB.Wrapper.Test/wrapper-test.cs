@@ -46,7 +46,7 @@ namespace LiteDB.Wrapper.Test
             try
             {
                 CollectionReference<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "insert_collection");
-                reference.Add(DataProvider.GetModel());
+                reference.Insert(DataProvider.GetModel());
                 await reference.Commit();
                 reference.Drop();
             }
@@ -60,7 +60,7 @@ namespace LiteDB.Wrapper.Test
             try
             {
                 CollectionReference<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "insert_collection");
-                reference.Add(DataProvider.GetModel(20));
+                reference.Insert(DataProvider.GetModel(20));
                 await reference.Commit();
                 reference.Drop();
             }
@@ -76,13 +76,13 @@ namespace LiteDB.Wrapper.Test
                 CollectionReference<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "update_collection");
                 using (WrapperModel _model = DataProvider.GetModel())
                 {
-                    reference.Add(_model);
+                    reference.Insert(_model);
                     await reference.Commit();
                     using (WrapperModel _inserted = reference.Get(_model._ID))
                     {
                         _inserted.Word = DataProvider.Word();
                         _inserted.Number = DataProvider.Number();
-                        reference.Modify(_inserted);
+                        reference.Update(_inserted);
                         await reference.Commit();
                         using (WrapperModel _updated = reference.Get(_inserted._ID))
                         {
@@ -102,7 +102,7 @@ namespace LiteDB.Wrapper.Test
             try
             {
                 CollectionReference<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "update_collection");
-                reference.Add(DataProvider.GetModel(10));
+                reference.Insert(DataProvider.GetModel(10));
                 await reference.Commit();
 
                 (IList<WrapperModel> _forUpdate, long r1) = reference.GetPaged(new PageOptions(0, 10), new SortOptions(SortOptions.Order.DSC, "_id"));
@@ -111,7 +111,7 @@ namespace LiteDB.Wrapper.Test
                     _model.Word = DataProvider.Word();
                     _model.Number = DataProvider.Number();
                 }
-                reference.Modify(_forUpdate);
+                reference.Update(_forUpdate);
                 await reference.Commit();
 
                 (IList<WrapperModel> _forChecking, long r2) = reference.GetPaged(new PageOptions(0, 10), new SortOptions(SortOptions.Order.DSC, "_id"));
@@ -133,7 +133,7 @@ namespace LiteDB.Wrapper.Test
                 CollectionReference<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "delete_collection");
                 using (WrapperModel _model = DataProvider.GetModel())
                 {
-                    reference.Add(_model);
+                    reference.Insert(_model);
                     await reference.Commit();
                     reference.Remove(_model._ID);
                     await reference.Commit();
@@ -154,7 +154,7 @@ namespace LiteDB.Wrapper.Test
             try
             {
                 CollectionReference<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "delete_collection");
-                reference.Add(DataProvider.GetModel(10));
+                reference.Insert(DataProvider.GetModel(10));
                 await reference.Commit();
 
                 (IList<WrapperModel> _forDelete, long rows) = reference.GetPaged(new PageOptions(0, 10), new SortOptions(SortOptions.Order.DSC, "_id"));

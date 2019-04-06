@@ -10,7 +10,8 @@
     <RepositoryUrl>https://github.com/norgelera/LiteDB.Wrapper</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>litedb lite db wrapper simple nosql</PackageTags>
-    <PackageReleaseNotes>Initial Release.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added the Commit() method.</PackageReleaseNotes>
+    <Version>1.2.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

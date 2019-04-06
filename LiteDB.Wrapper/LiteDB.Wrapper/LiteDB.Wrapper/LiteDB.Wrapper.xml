@@ -61,16 +61,16 @@
         <member name="M:LiteDB.Wrapper.CollectionReference`1.#ctor(System.String,System.String)">
             <summary></summary>
         </member>
-        <member name="M:LiteDB.Wrapper.CollectionReference`1.Add(`0)">
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.Insert(`0)">
             <summary>Insert an object to the referenced collection.</summary>
         </member>
-        <member name="M:LiteDB.Wrapper.CollectionReference`1.Add(System.Collections.Generic.IList{`0})">
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.Insert(System.Collections.Generic.IList{`0})">
             <summary>Insert a list of objects to the referenced collection.</summary>
         </member>
-        <member name="M:LiteDB.Wrapper.CollectionReference`1.Modify(`0)">
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.Update(`0)">
             <summary>Update an object in the referenced collection.</summary>
         </member>
-        <member name="M:LiteDB.Wrapper.CollectionReference`1.Modify(System.Collections.Generic.IList{`0})">
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.Update(System.Collections.Generic.IList{`0})">
             <summary>Update a list of objects in the referenced collection.</summary>
         </member>
         <member name="M:LiteDB.Wrapper.CollectionReference`1.Remove(System.Guid)">
