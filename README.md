@@ -19,19 +19,35 @@ CollectionReference<YourModel> reference = new  CollectionReference<YourModel>("
 
 Available methods
 ```c#
-Insert(T obj)
-Insert(IList<T> objList)
-Update(T obj)
-Update(IList<T> objList)
-Remove(Guid id)
-Remove(IList<Guid> idList)
+Add(T)
+Add(IList<T>)
+Modify(T)
+Modify(IList<T>)
+Remove(Guid)
+Remove(IList<Guid>)
+Commit()
+Get(Guid)
+(IList<T>, long) GetPaged(PageOptions, SortOptions)
 ```
+
+Here's an example usage
+```c#
+CollectionReference<Model> reference = new CollectionReference<Model>(litedbloc, "insert_collection");
+reference.Add(new Model
+{
+	_ID = Guid.NewGuid(),
+	Word = "Sample Word",
+	Number = 99
+});
+await reference.Commit();
+```
+You have to invoke ```Commit()``` at the end to save your changes to ```LiteDB```.
 
 Retrieving paged list
 ```c#
 (IList<WrapperModel> list, long rows) = reference.GetPaged(new PageOptions(0, 10), new SortOptions(SortOptions.Order.DSC, "_id"));
 ```
-*The **GetPaged** method returned a ```Tuple<IList<T>, long>```*
+*The **GetPaged** method returns a ```Tuple<IList<T>, long>```*
 
 ***Note*** : As per ``` LiteDB ``` specs, you must decorate your model classes with ```BsonField``` attributes.
 

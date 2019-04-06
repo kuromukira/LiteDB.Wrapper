@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace LiteDB.Wrapper.Test
@@ -40,12 +41,13 @@ namespace LiteDB.Wrapper.Test
         }
 
         [Fact]
-        public void Can_Insert_Item()
+        public async Task Can_Insert_Item()
         {
             try
             {
                 CollectionReference<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "insert_collection");
-                reference.Insert(DataProvider.GetModel());
+                reference.Add(DataProvider.GetModel());
+                await reference.Commit();
                 reference.Drop();
             }
             catch (Exception ex)
@@ -53,12 +55,13 @@ namespace LiteDB.Wrapper.Test
         }
 
         [Fact]
-        public void Can_Insert_Multiple_Items()
+        public async Task Can_Insert_Multiple_Items()
         {
             try
             {
                 CollectionReference<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "insert_collection");
-                reference.Insert(DataProvider.GetModel(20));
+                reference.Add(DataProvider.GetModel(20));
+                await reference.Commit();
                 reference.Drop();
             }
             catch (Exception ex)
@@ -66,19 +69,21 @@ namespace LiteDB.Wrapper.Test
         }
 
         [Fact]
-        public void Can_Update_Item()
+        public async Task Can_Update_Item()
         {
             try
             {
                 CollectionReference<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "update_collection");
                 using (WrapperModel _model = DataProvider.GetModel())
                 {
-                    reference.Insert(_model);
+                    reference.Add(_model);
+                    await reference.Commit();
                     using (WrapperModel _inserted = reference.Get(_model._ID))
                     {
                         _inserted.Word = DataProvider.Word();
                         _inserted.Number = DataProvider.Number();
-                        reference.Update(_inserted);
+                        reference.Modify(_inserted);
+                        await reference.Commit();
                         using (WrapperModel _updated = reference.Get(_inserted._ID))
                         {
                             VerifyAssertModels(_inserted, _updated);
@@ -92,12 +97,13 @@ namespace LiteDB.Wrapper.Test
         }
 
         [Fact]
-        public void Can_Update_Multiple_Items()
+        public async Task Can_Update_Multiple_Items()
         {
             try
             {
                 CollectionReference<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "update_collection");
-                reference.Insert(DataProvider.GetModel(10));
+                reference.Add(DataProvider.GetModel(10));
+                await reference.Commit();
 
                 (IList<WrapperModel> _forUpdate, long r1) = reference.GetPaged(new PageOptions(0, 10), new SortOptions(SortOptions.Order.DSC, "_id"));
                 foreach (WrapperModel _model in _forUpdate)
@@ -105,7 +111,8 @@ namespace LiteDB.Wrapper.Test
                     _model.Word = DataProvider.Word();
                     _model.Number = DataProvider.Number();
                 }
-                reference.Update(_forUpdate);
+                reference.Modify(_forUpdate);
+                await reference.Commit();
 
                 (IList<WrapperModel> _forChecking, long r2) = reference.GetPaged(new PageOptions(0, 10), new SortOptions(SortOptions.Order.DSC, "_id"));
 
@@ -119,16 +126,18 @@ namespace LiteDB.Wrapper.Test
         }
 
         [Fact]
-        public void Can_Remove_Item()
+        public async Task Can_Remove_Item()
         {
             try
             {
                 CollectionReference<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "delete_collection");
                 using (WrapperModel _model = DataProvider.GetModel())
                 {
-                    reference.Insert(_model);
+                    reference.Add(_model);
+                    await reference.Commit();
                     reference.Remove(_model._ID);
-                    using(WrapperModel _deletedModel = reference.Get(_model._ID))
+                    await reference.Commit();
+                    using (WrapperModel _deletedModel = reference.Get(_model._ID))
                     {
                         Assert.Null(_deletedModel);
                     }
@@ -140,15 +149,17 @@ namespace LiteDB.Wrapper.Test
         }
 
         [Fact]
-        public void Can_Remove_Multiple_Items()
+        public async Task Can_Remove_Multiple_Items()
         {
             try
             {
                 CollectionReference<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "delete_collection");
-                reference.Insert(DataProvider.GetModel(10));
+                reference.Add(DataProvider.GetModel(10));
+                await reference.Commit();
 
                 (IList<WrapperModel> _forDelete, long rows) = reference.GetPaged(new PageOptions(0, 10), new SortOptions(SortOptions.Order.DSC, "_id"));
                 reference.Remove(_forDelete.Select(_d => _d._ID).ToList());
+                await reference.Commit();
 
                 (IList<WrapperModel> _forChecking, long zeroRows) = reference.GetPaged(new PageOptions(0, 10), new SortOptions(SortOptions.Order.DSC, "_id"));
                 Assert.Equal(0, zeroRows);

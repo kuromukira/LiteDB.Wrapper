@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace LiteDB.Wrapper
 {
@@ -74,56 +75,50 @@ namespace LiteDB.Wrapper
     {
         /// <summary>Configuration for LiteDB.Wrapper</summary>
         public CollectionReferenceConfig Config { get; }
+        private IList<T> ToSave { get; set; } = new List<T>();
+        private IList<T> ToModify { get; set; } = new List<T>();
+        private IList<Guid> ToRemove { get; set; } = new List<Guid>();
 
         /// <summary></summary>
         public CollectionReference(string location, string collection) => Config = new CollectionReferenceConfig(location, collection);
 
         /// <summary>Insert an object to the referenced collection.</summary>
-        public virtual void Insert(T obj) => Insert(new List<T> { obj });
-
+        public void Add(T obj) => ToSave.Add(obj);
         /// <summary>Insert a list of objects to the referenced collection.</summary>
-        public virtual void Insert(IList<T> objList)
-        {
-            try
-            {
-                using (LiteRepository _liteDB = new LiteRepository(Config.Location))
-                {
-                    _liteDB.Insert<T>(objList, Config.Collection);
-                }
-            }
-            catch (Exception ex)
-            { throw ex; }
-        }
+        public void Add(IList<T> objs) => ToSave = ToSave.Concat(objs).ToList();
 
         /// <summary>Update an object in the referenced collection.</summary>
-        public virtual void Update(T obj) => Update(new List<T> { obj });
-
+        public void Modify(T obj) => ToModify.Add(obj);
         /// <summary>Update a list of objects in the referenced collection.</summary>
-        public virtual void Update(IList<T> objList)
-        {
-            try
-            {
-                using (LiteRepository _liteDB = new LiteRepository(Config.Location))
-                {
-                    _liteDB.Update<T>(objList, Config.Collection);
-                }
-            }
-            catch (Exception ex)
-            { throw ex; }
-        }
+        public void Modify(IList<T> objs) => ToModify = ToModify.Concat(objs).ToList();
 
         /// <summary>Remove an object that matches the given id.</summary>
-        public virtual void Remove(Guid id) => Remove(new List<Guid> { id });
+        public void Remove(Guid id) => ToRemove.Add(id);
+        /// <summary>Remove objects that matches the given ids.</summary>
+        public void Remove(IList<Guid> ids) => ToRemove = ToRemove.Concat(ids).ToList();
 
-        /// <summary>Remove a list of objects that matches the given ids.</summary>
-        public virtual void Remove(IList<Guid> idList)
+        /// <summary>Commit changes made to the collection.</summary>
+        public async Task Commit()
         {
             try
             {
-                using (LiteRepository _liteDB = new LiteRepository(Config.Location))
+                // For some odd reasons, current LiteDB version does not support transaction
+                using (LiteRepository _liteRepo = new LiteRepository(Config.Location))
                 {
-                    _liteDB.Delete<T>(Query.Where("_id", id => idList.Contains(id)), Config.Collection);
+                    if (ToSave.Any() || ToModify.Any())
+                    {
+                        IList<T> _combinedList = ToSave.Concat(ToModify).ToList();
+                        _liteRepo.Upsert<T>(_combinedList, Config.Collection);
+                    }
+                    if (ToRemove.Any())
+                        _liteRepo.Delete<T>(Query.Where("_id", id => ToRemove.Contains(id)), Config.Collection);
                 }
+                await Task.Run(() =>
+                {
+                    ToSave.Clear();
+                    ToModify.Clear();
+                    ToRemove.Clear();
+                });
             }
             catch (Exception ex)
             { throw ex; }
