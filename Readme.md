@@ -33,7 +33,7 @@ Get(Guid)
 Here's an example usage
 ```c#
 CollectionReference<Model> reference = new CollectionReference<Model>(litedbloc, "insert_collection");
-reference.Add(new Model
+reference.Insert(new Model
 {
 	_ID = Guid.NewGuid(),
 	Word = "Sample Word",
