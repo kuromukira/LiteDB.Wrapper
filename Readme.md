@@ -1,7 +1,11 @@
 # LiteDB-Wrapper
 A simpler way to use [LiteDB](https://github.com/mbdavid/LiteDB)
 
+<div>
 <img alt="Azure DevOps builds" src="https://img.shields.io/azure-devops/build/norgelera/277d6eba-8304-42f5-8471-77737cf8ec7f/8.svg">
+<img alt="Nuget" src="https://img.shields.io/nuget/dt/LiteDB.Wrapper">
+<img alt="Nuget" src="https://img.shields.io/nuget/v/LiteDB.Wrapper">
+</div>
 
 # How-To
 
