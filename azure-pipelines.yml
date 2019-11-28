@@ -1,0 +1,42 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'vs2017-win2016'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+# Restore dependencies
+- script: |
+    dotnet restore
+  displayName: 'Restore dependencies'
+
+# Build project
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'Build $(buildConfiguration)'
+
+# Execute unit tests with coverage
+- script: |
+    mkdir $(Build.SourcesDirectory)\results
+    dotnet test --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura  LiteDB.Wrapper/LiteDB.Wrapper.Test
+    copy $(Build.SourcesDirectory)\LiteDB.Wrapper\LiteDB.Wrapper.Test\coverage.cobertura.xml $(Build.SourcesDirectory)\results
+    dotnet tool install dotnet-reportgenerator-globaltool --tool-path . --version 4.0.0-rc4
+    .\reportgenerator "-reports:$(Build.SourcesDirectory)\LiteDB.Wrapper\LiteDB.Wrapper.Test\coverage.cobertura.xml" "-targetdir:results" "-reporttypes:HTMLInline;HTMLChart"
+  displayName: 'Test with coverage'
+
+# Publish test results
+- task: PublishTestResults@2
+  displayName: 'Publist test results'
+  inputs:
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
+
+# Publish coverage results
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish code coverage'
+  inputs:
+    summaryFileLocation: $(Build.SourcesDirectory)\results\coverage.cobertura.xml
+    reportDirectory: $(Build.SourcesDirectory)\results
+    codecoverageTool: cobertura
