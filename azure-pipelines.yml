@@ -10,11 +10,14 @@ variables:
 steps:
 # Restore dependencies
 - script: |
+    cd LiteDB.Wrapper
     dotnet restore
   displayName: 'Restore dependencies'
 
 # Build project
-- script: dotnet build --configuration $(buildConfiguration)
+- script: |
+    cd LiteDB.Wrapper
+    dotnet build --configuration $(buildConfiguration)
   displayName: 'Build $(buildConfiguration)'
 
 # Execute unit tests with coverage
