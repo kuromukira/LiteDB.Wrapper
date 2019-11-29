@@ -4,6 +4,42 @@
         <name>LiteDB.Wrapper</name>
     </assembly>
     <members>
+        <member name="T:LiteDB.Wrapper.Interface.ICollectionRef`1">
+            <summary>Collection Referance interface</summary>
+        </member>
+        <member name="P:LiteDB.Wrapper.Interface.ICollectionRef`1.Config">
+            <summary>Configuration for LiteDB.Wrapper</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.Interface.ICollectionRef`1.Insert(`0)">
+            <summary>Insert an object to the referenced collection.</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.Interface.ICollectionRef`1.Insert(System.Collections.Generic.IList{`0})">
+            <summary>Insert a list of objects to the referenced collection.</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.Interface.ICollectionRef`1.Update(`0)">
+            <summary>Update an object in the referenced collection.</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.Interface.ICollectionRef`1.Update(System.Collections.Generic.IList{`0})">
+            <summary>Update a list of objects in the referenced collection.</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.Interface.ICollectionRef`1.Remove(System.Guid)">
+            <summary>Remove an object that matches the given id.</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.Interface.ICollectionRef`1.Remove(System.Collections.Generic.IList{System.Guid})">
+            <summary>Remove objects that matches the given ids.</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.Interface.ICollectionRef`1.Commit">
+            <summary>Commit changes made to the collection.</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.Interface.ICollectionRef`1.Get(System.Guid)">
+            <summary>Get an item from the referenced collection.</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.Interface.ICollectionRef`1.GetPaged(LiteDB.Wrapper.PageOptions,LiteDB.Wrapper.SortOptions)">
+            <summary>Get a paginated list of items from the referenced collection.</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.Interface.ICollectionRef`1.Drop">
+            <summary>Explicitly drop currenct collection.</summary>
+        </member>
         <member name="T:LiteDB.Wrapper.CollectionReferenceConfig">
             <summary>Configuration for LiteDB.Wrapper</summary>
         </member>
@@ -19,40 +55,37 @@
         <member name="T:LiteDB.Wrapper.CollectionReference`1">
             <summary></summary>
         </member>
-        <member name="P:LiteDB.Wrapper.CollectionReference`1.Config">
-            <summary>Configuration for LiteDB.Wrapper</summary>
-        </member>
         <member name="M:LiteDB.Wrapper.CollectionReference`1.#ctor(System.String,System.String)">
             <summary></summary>
         </member>
-        <member name="M:LiteDB.Wrapper.CollectionReference`1.Insert(`0)">
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.LiteDB#Wrapper#Interface#ICollectionRef{T}#Insert(`0)">
             <summary>Insert an object to the referenced collection.</summary>
         </member>
-        <member name="M:LiteDB.Wrapper.CollectionReference`1.Insert(System.Collections.Generic.IList{`0})">
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.LiteDB#Wrapper#Interface#ICollectionRef{T}#Insert(System.Collections.Generic.IList{`0})">
             <summary>Insert a list of objects to the referenced collection.</summary>
         </member>
-        <member name="M:LiteDB.Wrapper.CollectionReference`1.Update(`0)">
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.LiteDB#Wrapper#Interface#ICollectionRef{T}#Update(`0)">
             <summary>Update an object in the referenced collection.</summary>
         </member>
-        <member name="M:LiteDB.Wrapper.CollectionReference`1.Update(System.Collections.Generic.IList{`0})">
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.LiteDB#Wrapper#Interface#ICollectionRef{T}#Update(System.Collections.Generic.IList{`0})">
             <summary>Update a list of objects in the referenced collection.</summary>
         </member>
-        <member name="M:LiteDB.Wrapper.CollectionReference`1.Remove(System.Guid)">
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.LiteDB#Wrapper#Interface#ICollectionRef{T}#Remove(System.Guid)">
             <summary>Remove an object that matches the given id.</summary>
         </member>
-        <member name="M:LiteDB.Wrapper.CollectionReference`1.Remove(System.Collections.Generic.IList{System.Guid})">
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.LiteDB#Wrapper#Interface#ICollectionRef{T}#Remove(System.Collections.Generic.IList{System.Guid})">
             <summary>Remove objects that matches the given ids.</summary>
         </member>
-        <member name="M:LiteDB.Wrapper.CollectionReference`1.Commit">
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.LiteDB#Wrapper#Interface#ICollectionRef{T}#Commit">
             <summary>Commit changes made to the collection.</summary>
         </member>
-        <member name="M:LiteDB.Wrapper.CollectionReference`1.Get(System.Guid)">
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.LiteDB#Wrapper#Interface#ICollectionRef{T}#Get(System.Guid)">
             <summary>Get an item from the referenced collection.</summary>
         </member>
-        <member name="M:LiteDB.Wrapper.CollectionReference`1.GetPaged(LiteDB.Wrapper.PageOptions,LiteDB.Wrapper.SortOptions)">
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.LiteDB#Wrapper#Interface#ICollectionRef{T}#GetPaged(LiteDB.Wrapper.PageOptions,LiteDB.Wrapper.SortOptions)">
             <summary>Get a paginated list of items from the referenced collection.</summary>
         </member>
-        <member name="M:LiteDB.Wrapper.CollectionReference`1.Drop">
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.LiteDB#Wrapper#Interface#ICollectionRef{T}#Drop">
             <summary>Explicitly drop currenct collection.</summary>
         </member>
         <member name="M:LiteDB.Wrapper.CollectionReference`1.Dispose(System.Boolean)">

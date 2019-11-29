@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LiteDB.Wrapper.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,47 +7,48 @@ using System.Threading.Tasks;
 namespace LiteDB.Wrapper
 {
     /// <summary></summary>
-    public class CollectionReference<T> : IDisposable
+    public class CollectionReference<T> : ICollectionRef<T>, IDisposable
     {
-        /// <summary>Configuration for LiteDB.Wrapper</summary>
-        public CollectionReferenceConfig Config { get; }
         private IList<T> ToSave { get; set; } = new List<T>();
         private IList<T> ToModify { get; set; } = new List<T>();
         private IList<Guid> ToRemove { get; set; } = new List<Guid>();
+        private CollectionReferenceConfig RefConfig { get; set; }
+
+        CollectionReferenceConfig ICollectionRef<T>.Config => RefConfig;
 
         /// <summary></summary>
-        public CollectionReference(string location, string collection) => Config = new CollectionReferenceConfig(location, collection);
+        public CollectionReference(string location, string collection) => RefConfig = new CollectionReferenceConfig(location, collection);
 
         /// <summary>Insert an object to the referenced collection.</summary>
-        public void Insert(T obj) => ToSave.Add(obj);
+        void ICollectionRef<T>.Insert(T obj) => ToSave.Add(obj);
         /// <summary>Insert a list of objects to the referenced collection.</summary>
-        public void Insert(IList<T> objs) => ToSave = ToSave.Concat(objs).ToList();
+        void ICollectionRef<T>.Insert(IList<T> objs) => ToSave = ToSave.Concat(objs).ToList();
 
         /// <summary>Update an object in the referenced collection.</summary>
-        public void Update(T obj) => ToModify.Add(obj);
+        void ICollectionRef<T>.Update(T obj) => ToModify.Add(obj);
         /// <summary>Update a list of objects in the referenced collection.</summary>
-        public void Update(IList<T> objs) => ToModify = ToModify.Concat(objs).ToList();
+        void ICollectionRef<T>.Update(IList<T> objs) => ToModify = ToModify.Concat(objs).ToList();
 
         /// <summary>Remove an object that matches the given id.</summary>
-        public void Remove(Guid id) => ToRemove.Add(id);
+        void ICollectionRef<T>.Remove(Guid id) => ToRemove.Add(id);
         /// <summary>Remove objects that matches the given ids.</summary>
-        public void Remove(IList<Guid> ids) => ToRemove = ToRemove.Concat(ids).ToList();
+        void ICollectionRef<T>.Remove(IList<Guid> ids) => ToRemove = ToRemove.Concat(ids).ToList();
 
         /// <summary>Commit changes made to the collection.</summary>
-        public async Task Commit()
+        async Task ICollectionRef<T>.Commit()
         {
             try
             {
                 // For some odd reasons, current LiteDB version does not support transaction
-                using (LiteRepository _liteRepo = new LiteRepository(Config.Location))
+                using (LiteRepository _liteRepo = new LiteRepository(RefConfig.Location))
                 {
                     if (ToSave.Any() || ToModify.Any())
                     {
                         IList<T> _combinedList = ToSave.Concat(ToModify).ToList();
-                        _liteRepo.Upsert<T>(_combinedList, Config.Collection);
+                        _liteRepo.Upsert<T>(_combinedList, RefConfig.Collection);
                     }
                     if (ToRemove.Any())
-                        _liteRepo.Delete<T>(Query.Where("_id", id => ToRemove.Contains(id)), Config.Collection);
+                        _liteRepo.Delete<T>(Query.Where("_id", id => ToRemove.Contains(id)), RefConfig.Collection);
                 }
                 await Task.Run(() =>
                 {
@@ -60,13 +62,13 @@ namespace LiteDB.Wrapper
         }
 
         /// <summary>Get an item from the referenced collection.</summary>
-        public virtual T Get(Guid id)
+        T ICollectionRef<T>.Get(Guid id)
         {
             try
             {
-                using (LiteDatabase _liteDB = new LiteDatabase(Config.Location))
+                using (LiteDatabase _liteDB = new LiteDatabase(RefConfig.Location))
                 {
-                    var _collection = _liteDB.GetCollection<T>(Config.Collection);
+                    var _collection = _liteDB.GetCollection<T>(RefConfig.Collection);
                     return _collection.IncludeAll().FindById(id);
                 }
             }
@@ -75,15 +77,15 @@ namespace LiteDB.Wrapper
         }
 
         /// <summary>Get a paginated list of items from the referenced collection.</summary>
-        public virtual PagedResult<T> GetPaged(PageOptions pageOptions, SortOptions sortOptions)
+        PagedResult<T> ICollectionRef<T>.GetPaged(PageOptions pageOptions, SortOptions sortOptions)
         {
             try
             {
-                using (LiteDatabase _liteDB = new LiteDatabase(Config.Location))
+                using (LiteDatabase _liteDB = new LiteDatabase(RefConfig.Location))
                 {
-                    var _collection = _liteDB.GetCollection<T>(Config.Collection);
+                    var _collection = _liteDB.GetCollection<T>(RefConfig.Collection);
                     _collection.EnsureIndex(sortOptions.Field, true);
-                    long _countAll = _liteDB.GetCollection<T>(Config.Collection).Count();
+                    long _countAll = _liteDB.GetCollection<T>(RefConfig.Collection).Count();
                     return new PagedResult<T>(_countAll, _collection.IncludeAll().Find(Query.All(sortOptions.Field, (int)sortOptions.Sort), pageOptions.Offset, pageOptions.Rows).ToList());
                 }
             }
@@ -92,13 +94,13 @@ namespace LiteDB.Wrapper
         }
 
         /// <summary>Explicitly drop currenct collection.</summary>
-        public void Drop()
+        void ICollectionRef<T>.Drop()
         {
             try
             {
-                using (LiteDatabase _liteDb = new LiteDatabase(Config.Location))
+                using (LiteDatabase _liteDb = new LiteDatabase(RefConfig.Location))
                 {
-                    _liteDb.DropCollection(Config.Collection);
+                    _liteDb.DropCollection(RefConfig.Collection);
                 }
             }
             catch (Exception ex)

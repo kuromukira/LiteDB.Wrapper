@@ -4,6 +4,7 @@ A simpler way to use [LiteDB](https://github.com/mbdavid/LiteDB)
 ![Azure DevOps builds](https://img.shields.io/azure-devops/build/norgelera/277d6eba-8304-42f5-8471-77737cf8ec7f/8.svg)
 ![Nuget](https://img.shields.io/nuget/dt/LiteDB.Wrapper)
 ![Nuget](https://img.shields.io/nuget/v/LiteDB.Wrapper)
+![GitHub](https://img.shields.io/github/license/kuromukira/LiteDB.Wrapper)
 
 # How-To
 
@@ -12,11 +13,12 @@ A simpler way to use [LiteDB](https://github.com/mbdavid/LiteDB)
 Add as reference
 ```c#
 using LiteDB.Wrapper;
+using LiteDB.Wrapper.Interface;
 ```
 
 Create a collection reference
 ```c#
-CollectionReference<YourModel> reference = new  CollectionReference<YourModel>("mydatabase.db", "my_collection");
+ICollectionRef<YourModel> reference = new  CollectionReference<YourModel>("mydatabase.db", "my_collection");
 ```
 
 Available methods
@@ -29,12 +31,12 @@ Remove(Guid)
 Remove(IList<Guid>)
 Commit()
 Get(Guid)
-(IList<T>, long) GetPaged(PageOptions, SortOptions)
+GetPaged(PageOptions, SortOptions)
 ```
 
 Here's an example usage
 ```c#
-CollectionReference<Model> reference = new CollectionReference<Model>(litedbloc, "insert_collection");
+ICollectionRef<Model> reference = new CollectionReference<Model>(litedbloc, "insert_collection");
 reference.Insert(new Model
 {
 	_ID = Guid.NewGuid(),
@@ -44,12 +46,6 @@ reference.Insert(new Model
 await reference.Commit();
 ```
 You have to invoke ```Commit()``` at the end to save your changes to ```LiteDB```.
-
-Retrieving paged list
-```c#
-(IList<WrapperModel> list, long rows) = reference.GetPaged(new PageOptions(0, 10), new SortOptions(SortOptions.Order.DSC, "_id"));
-```
-*The **GetPaged** method returns a ```Tuple<IList<T>, long>```*
 
 ***Note*** : As per ``` LiteDB ``` specs, you must decorate your model classes with ```BsonField``` attributes.
 
