@@ -4,42 +4,6 @@
         <name>LiteDB.Wrapper</name>
     </assembly>
     <members>
-        <member name="T:LiteDB.Wrapper.SortOptions">
-            <summary>Collection Sort Options</summary>
-        </member>
-        <member name="T:LiteDB.Wrapper.SortOptions.Order">
-            <summary></summary>
-        </member>
-        <member name="F:LiteDB.Wrapper.SortOptions.Order.ASC">
-            <summary>Ascending</summary>
-        </member>
-        <member name="F:LiteDB.Wrapper.SortOptions.Order.DSC">
-            <summary>Descending</summary>
-        </member>
-        <member name="P:LiteDB.Wrapper.SortOptions.Sort">
-            <summary>Ascending or Descending. Default is DSC</summary>
-        </member>
-        <member name="P:LiteDB.Wrapper.SortOptions.Field">
-            <summary>Sort Field</summary>
-        </member>
-        <member name="M:LiteDB.Wrapper.SortOptions.#ctor(System.String)">
-            <summary></summary>
-        </member>
-        <member name="M:LiteDB.Wrapper.SortOptions.#ctor(LiteDB.Wrapper.SortOptions.Order,System.String)">
-            <summary></summary>
-        </member>
-        <member name="T:LiteDB.Wrapper.PageOptions">
-            <summary>Collection Pagination Options</summary>
-        </member>
-        <member name="P:LiteDB.Wrapper.PageOptions.Offset">
-            <summary>Page offset</summary>
-        </member>
-        <member name="P:LiteDB.Wrapper.PageOptions.Rows">
-            <summary>Total # of rows to fetch per page</summary>
-        </member>
-        <member name="M:LiteDB.Wrapper.PageOptions.#ctor(System.Int32,System.Int32)">
-            <summary></summary>
-        </member>
         <member name="T:LiteDB.Wrapper.CollectionReferenceConfig">
             <summary>Configuration for LiteDB.Wrapper</summary>
         </member>
@@ -95,6 +59,54 @@
             <summary></summary>
         </member>
         <member name="M:LiteDB.Wrapper.CollectionReference`1.Dispose">
+            <summary></summary>
+        </member>
+        <member name="T:LiteDB.Wrapper.PageOptions">
+            <summary>Collection Pagination Options</summary>
+        </member>
+        <member name="P:LiteDB.Wrapper.PageOptions.Offset">
+            <summary>Page offset</summary>
+        </member>
+        <member name="P:LiteDB.Wrapper.PageOptions.Rows">
+            <summary>Total # of rows to fetch per page</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.PageOptions.#ctor(System.Int32,System.Int32)">
+            <summary></summary>
+        </member>
+        <member name="T:LiteDB.Wrapper.PagedResult`1">
+            <summary>Result for getting paged collection</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.PagedResult`1.#ctor(System.Int64,System.Collections.Generic.IList{`0})">
+            <summary>Result for getting paged collection</summary>
+        </member>
+        <member name="P:LiteDB.Wrapper.PagedResult`1.TotalRows">
+            <summary>Total number of rows in the collection</summary>
+        </member>
+        <member name="P:LiteDB.Wrapper.PagedResult`1.Result">
+            <summary>Paged rows</summary>
+        </member>
+        <member name="T:LiteDB.Wrapper.SortOptions">
+            <summary>Collection Sort Options</summary>
+        </member>
+        <member name="T:LiteDB.Wrapper.SortOptions.Order">
+            <summary></summary>
+        </member>
+        <member name="F:LiteDB.Wrapper.SortOptions.Order.ASC">
+            <summary>Ascending</summary>
+        </member>
+        <member name="F:LiteDB.Wrapper.SortOptions.Order.DSC">
+            <summary>Descending</summary>
+        </member>
+        <member name="P:LiteDB.Wrapper.SortOptions.Sort">
+            <summary>Ascending or Descending. Default is DSC</summary>
+        </member>
+        <member name="P:LiteDB.Wrapper.SortOptions.Field">
+            <summary>Sort Field</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.SortOptions.#ctor(System.String)">
+            <summary></summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.SortOptions.#ctor(LiteDB.Wrapper.SortOptions.Order,System.String)">
             <summary></summary>
         </member>
     </members>
