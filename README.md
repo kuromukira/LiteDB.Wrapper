@@ -4,6 +4,7 @@ A simpler way to use [LiteDB](https://github.com/mbdavid/LiteDB)
 ![Azure DevOps builds](https://img.shields.io/azure-devops/build/norgelera/277d6eba-8304-42f5-8471-77737cf8ec7f/8.svg)
 ![Nuget](https://img.shields.io/nuget/dt/LiteDB.Wrapper)
 ![Nuget](https://img.shields.io/nuget/v/LiteDB.Wrapper)
+![GitHub](https://img.shields.io/github/license/kuromukira/LiteDB.Wrapper)
 
 # How-To
 
