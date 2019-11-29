@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LiteDB.Wrapper.Interface;
 using Xunit;
 
 namespace LiteDB.Wrapper.Test
@@ -14,7 +15,7 @@ namespace LiteDB.Wrapper.Test
         [Fact]
         public void Should_Be_Able_To_Initialize()
         {
-            CollectionReference<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "insert_collection");
+            ICollectionRef<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "insert_collection");
             Assert.NotNull(reference);
             Assert.NotNull(reference.Config);
         }
@@ -24,7 +25,7 @@ namespace LiteDB.Wrapper.Test
         {
             try
             {
-                CollectionReference<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, string.Empty);
+                ICollectionRef<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, string.Empty);
                 Assert.Null(reference);
             }
             catch (Exception ex)
@@ -45,7 +46,7 @@ namespace LiteDB.Wrapper.Test
         {
             try
             {
-                CollectionReference<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "insert_collection");
+                ICollectionRef<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "insert_collection");
                 reference.Insert(DataProvider.GetModel());
                 await reference.Commit();
                 reference.Drop();
@@ -59,7 +60,7 @@ namespace LiteDB.Wrapper.Test
         {
             try
             {
-                CollectionReference<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "insert_collection");
+                ICollectionRef<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "insert_collection");
                 reference.Insert(DataProvider.GetModel(20));
                 await reference.Commit();
                 reference.Drop();
@@ -73,7 +74,7 @@ namespace LiteDB.Wrapper.Test
         {
             try
             {
-                CollectionReference<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "update_collection");
+                ICollectionRef<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "update_collection");
                 using (WrapperModel _model = DataProvider.GetModel())
                 {
                     reference.Insert(_model);
@@ -101,7 +102,7 @@ namespace LiteDB.Wrapper.Test
         {
             try
             {
-                CollectionReference<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "update_collection");
+                ICollectionRef<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "update_collection");
                 reference.Insert(DataProvider.GetModel(10));
                 await reference.Commit();
 
@@ -129,7 +130,7 @@ namespace LiteDB.Wrapper.Test
         {
             try
             {
-                CollectionReference<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "delete_collection");
+                ICollectionRef<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "delete_collection");
                 using (WrapperModel _model = DataProvider.GetModel())
                 {
                     reference.Insert(_model);
@@ -152,7 +153,7 @@ namespace LiteDB.Wrapper.Test
         {
             try
             {
-                CollectionReference<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "delete_collection");
+                ICollectionRef<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "delete_collection");
                 reference.Insert(DataProvider.GetModel(10));
                 await reference.Commit();
 
