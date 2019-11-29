@@ -12,7 +12,7 @@ namespace LiteDB.Wrapper
         private IList<T> ToSave { get; set; } = new List<T>();
         private IList<T> ToModify { get; set; } = new List<T>();
         private IList<Guid> ToRemove { get; set; } = new List<Guid>();
-        private CollectionReferenceConfig RefConfig { get; set; } = new CollectionReferenceConfig(string.Empty, string.Empty);
+        private CollectionReferenceConfig RefConfig { get; set; }
 
         CollectionReferenceConfig ICollectionRef<T>.Config => RefConfig;
 
