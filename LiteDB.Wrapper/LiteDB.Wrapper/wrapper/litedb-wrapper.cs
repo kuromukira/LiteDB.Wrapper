@@ -5,71 +5,6 @@ using System.Threading.Tasks;
 
 namespace LiteDB.Wrapper
 {
-    /// <summary>Collection Sort Options</summary>
-    public class SortOptions
-    {
-        /// <summary></summary>
-        public enum Order
-        {
-            /// <summary>Ascending</summary>
-            ASC = 1,
-            /// <summary>Descending</summary>
-            DSC = -1
-        }
-        /// <summary>Ascending or Descending. Default is DSC</summary>
-        public Order Sort { get; } = Order.DSC;
-        /// <summary>Sort Field</summary>
-        public string Field { get; }
-
-        /// <summary></summary>
-        public SortOptions(string field) => Field = field ?? string.Empty;
-
-        /// <summary></summary>
-        public SortOptions(Order sort, string field)
-        {
-            Sort = sort;
-            Field = field ?? string.Empty;
-        }
-    }
-
-    /// <summary>Collection Pagination Options</summary>
-    public class PageOptions
-    {
-        /// <summary>Page offset</summary>
-        public int Offset { get; }
-        /// <summary>Total # of rows to fetch per page</summary>
-        public int Rows { get; }
-
-        /// <summary></summary>
-        public PageOptions(int offset, int rows)
-        {
-            if (rows <= 0)
-                throw new ArgumentOutOfRangeException("Total # of rows to fetch per page cannot be less than or equal to 0.");
-            else if (offset < 0)
-                throw new ArgumentOutOfRangeException("Page offset cannot be less than 0.");
-            Offset = offset;
-            Rows = rows;
-        }
-    }
-
-    /// <summary>Configuration for LiteDB.Wrapper</summary>
-    public class CollectionReferenceConfig
-    {
-        /// <summary>LiteDB file location</summary>
-        public string Location { get; }
-        /// <summary>Collection name for reference</summary>
-        public string Collection { get; }
-
-        /// <summary></summary>
-        internal CollectionReferenceConfig(string location, string collection)
-        {
-            if (string.IsNullOrWhiteSpace(location) || string.IsNullOrWhiteSpace(collection))
-                throw new Exception("Failed to initialize LiteDB Repository.");
-            Location = location;
-            Collection = collection;
-        }
-    }
-
     /// <summary></summary>
     public class CollectionReference<T> : IDisposable
     {
@@ -140,7 +75,7 @@ namespace LiteDB.Wrapper
         }
 
         /// <summary>Get a paginated list of items from the referenced collection.</summary>
-        public virtual (IList<T> list, long rows) GetPaged(PageOptions pageOptions, SortOptions sortOptions)
+        public virtual PagedResult<T> GetPaged(PageOptions pageOptions, SortOptions sortOptions)
         {
             try
             {
@@ -149,7 +84,7 @@ namespace LiteDB.Wrapper
                     var _collection = _liteDB.GetCollection<T>(Config.Collection);
                     _collection.EnsureIndex(sortOptions.Field, true);
                     long _countAll = _liteDB.GetCollection<T>(Config.Collection).Count();
-                    return (_collection.IncludeAll().Find(Query.All(sortOptions.Field, (int)sortOptions.Sort), pageOptions.Offset, pageOptions.Rows).ToList(), _countAll);
+                    return new PagedResult<T>(_countAll, _collection.IncludeAll().Find(Query.All(sortOptions.Field, (int)sortOptions.Sort), pageOptions.Offset, pageOptions.Rows).ToList());
                 }
             }
             catch (Exception ex)

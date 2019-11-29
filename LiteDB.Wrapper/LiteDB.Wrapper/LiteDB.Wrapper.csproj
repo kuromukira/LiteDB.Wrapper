@@ -10,8 +10,11 @@
     <RepositoryUrl>https://github.com/norgelera/LiteDB.Wrapper</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>litedb lite db wrapper simple nosql</PackageTags>
-    <PackageReleaseNotes>Added the Commit() method.</PackageReleaseNotes>
-    <Version>1.2.0</Version>
+    <PackageReleaseNotes>
+      - [BREAKING] Change implementation to interfaces
+      - Change tuple return to a class object for GetPaged().
+    </PackageReleaseNotes>
+    <Version>2.0.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

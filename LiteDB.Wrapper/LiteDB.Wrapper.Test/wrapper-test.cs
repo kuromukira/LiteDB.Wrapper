@@ -105,19 +105,18 @@ namespace LiteDB.Wrapper.Test
                 reference.Insert(DataProvider.GetModel(10));
                 await reference.Commit();
 
-                (IList<WrapperModel> _forUpdate, long r1) = reference.GetPaged(new PageOptions(0, 10), new SortOptions(SortOptions.Order.DSC, "_id"));
-                foreach (WrapperModel _model in _forUpdate)
+                PagedResult<WrapperModel> _pagedForUpdate = reference.GetPaged(new PageOptions(0, 10), new SortOptions(SortOptions.Order.DSC, "_id"));
+                foreach (WrapperModel _model in _pagedForUpdate.Result)
                 {
                     _model.Word = DataProvider.Word();
                     _model.Number = DataProvider.Number();
                 }
-                reference.Update(_forUpdate);
+                reference.Update(_pagedForUpdate.Result);
                 await reference.Commit();
 
-                (IList<WrapperModel> _forChecking, long r2) = reference.GetPaged(new PageOptions(0, 10), new SortOptions(SortOptions.Order.DSC, "_id"));
-
-                foreach (WrapperModel _model in _forChecking)
-                    VerifyAssertModels(_forUpdate[_forChecking.IndexOf(_model)], _model);
+                PagedResult<WrapperModel> _pagedForChecking = reference.GetPaged(new PageOptions(0, 10), new SortOptions(SortOptions.Order.DSC, "_id"));
+                foreach (WrapperModel _model in _pagedForChecking.Result)
+                    VerifyAssertModels(_pagedForUpdate.Result[_pagedForChecking.Result.IndexOf(_model)], _model);
 
                 reference.Drop();
             }
@@ -157,13 +156,13 @@ namespace LiteDB.Wrapper.Test
                 reference.Insert(DataProvider.GetModel(10));
                 await reference.Commit();
 
-                (IList<WrapperModel> _forDelete, long rows) = reference.GetPaged(new PageOptions(0, 10), new SortOptions(SortOptions.Order.DSC, "_id"));
-                reference.Remove(_forDelete.Select(_d => _d._ID).ToList());
+                PagedResult<WrapperModel> _pagedForDelete = reference.GetPaged(new PageOptions(0, 10), new SortOptions(SortOptions.Order.DSC, "_id"));
+                reference.Remove(_pagedForDelete.Result.Select(_d => _d._ID).ToList());
                 await reference.Commit();
 
-                (IList<WrapperModel> _forChecking, long zeroRows) = reference.GetPaged(new PageOptions(0, 10), new SortOptions(SortOptions.Order.DSC, "_id"));
-                Assert.Equal(0, zeroRows);
-                Assert.False(_forChecking.Any());
+                PagedResult<WrapperModel> _pagedForChecking = reference.GetPaged(new PageOptions(0, 10), new SortOptions(SortOptions.Order.DSC, "_id"));
+                Assert.Equal(0, _pagedForChecking.TotalRows);
+                Assert.False(_pagedForChecking.Result.Any());
 
                 reference.Drop();
             }
