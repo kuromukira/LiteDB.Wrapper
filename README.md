@@ -5,6 +5,7 @@ A simpler way to use [LiteDB](https://github.com/mbdavid/LiteDB)
 ![Nuget](https://img.shields.io/nuget/dt/LiteDB.Wrapper)
 ![Nuget](https://img.shields.io/nuget/v/LiteDB.Wrapper)
 ![GitHub](https://img.shields.io/github/license/kuromukira/LiteDB.Wrapper)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7f6f0647e32d45f8969401411257dc49)](https://www.codacy.com/manual/norgelera/LiteDB.Wrapper?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kuromukira/LiteDB.Wrapper&amp;utm_campaign=Badge_Grade)
 
 # How-To
 
