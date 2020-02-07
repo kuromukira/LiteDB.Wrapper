@@ -39,17 +39,18 @@ namespace LiteDB.Wrapper
         {
             try
             {
-                // For some odd reasons, current LiteDB version does not support transaction
-                using (LiteRepository _liteRepo = new LiteRepository(RefConfig.Location))
+                using LiteRepository _liteRepo = new LiteRepository(RefConfig.Location);
+                if (ToSave.Any() || ToModify.Any())
                 {
-                    if (ToSave.Any() || ToModify.Any())
-                    {
-                        IList<T> _combinedList = ToSave.Concat(ToModify).ToList();
-                        _liteRepo.Upsert<T>(_combinedList, RefConfig.Collection);
-                    }
-                    if (ToRemove.Any())
-                        _liteRepo.Delete<T>(Query.Where("_id", id => ToRemove.Contains(id)), RefConfig.Collection);
+                    IList<T> _combinedList = ToSave.Concat(ToModify).ToList();
+                    _liteRepo.Upsert<T>(_combinedList, RefConfig.Collection);
                 }
+                if (ToRemove.Any())
+                {
+                    BsonValue[] _bsonValues = ToRemove.Select(_id => new BsonValue(_id)).ToArray();
+                    _liteRepo.DeleteMany<T>(Query.In("_id", _bsonValues), RefConfig.Collection);
+                }
+
                 await Task.Run(() =>
                 {
                     ToSave.Clear();
@@ -66,11 +67,9 @@ namespace LiteDB.Wrapper
         {
             try
             {
-                using (LiteDatabase _liteDB = new LiteDatabase(RefConfig.Location))
-                {
-                    var _collection = _liteDB.GetCollection<T>(RefConfig.Collection);
-                    return _collection.IncludeAll().FindById(id);
-                }
+                using LiteDatabase _liteDB = new LiteDatabase(RefConfig.Location);
+                ILiteCollection<T> _collection = _liteDB.GetCollection<T>(RefConfig.Collection);
+                return _collection.FindById(id);
             }
             catch (Exception ex)
             { throw ex; }
@@ -81,13 +80,11 @@ namespace LiteDB.Wrapper
         {
             try
             {
-                using (LiteDatabase _liteDB = new LiteDatabase(RefConfig.Location))
-                {
-                    var _collection = _liteDB.GetCollection<T>(RefConfig.Collection);
-                    _collection.EnsureIndex(sortOptions.Field, true);
-                    long _countAll = _liteDB.GetCollection<T>(RefConfig.Collection).Count();
-                    return new PagedResult<T>(_countAll, _collection.IncludeAll().Find(Query.All(sortOptions.Field, (int)sortOptions.Sort), pageOptions.Offset, pageOptions.Rows).ToList());
-                }
+                using LiteDatabase _liteDB = new LiteDatabase(RefConfig.Location);
+                ILiteCollection<T> _collection = _liteDB.GetCollection<T>(RefConfig.Collection);
+                _collection.EnsureIndex(sortOptions.Field, true);
+                long _countAll = _liteDB.GetCollection<T>(RefConfig.Collection).Count();
+                return new PagedResult<T>(_countAll, _collection.Find(Query.All(sortOptions.Field, (int)sortOptions.Sort), pageOptions.Offset, pageOptions.Rows).ToList());
             }
             catch (Exception ex)
             { throw ex; }
@@ -98,10 +95,8 @@ namespace LiteDB.Wrapper
         {
             try
             {
-                using (LiteDatabase _liteDb = new LiteDatabase(RefConfig.Location))
-                {
-                    _liteDb.DropCollection(RefConfig.Collection);
-                }
+                using LiteDatabase _liteDb = new LiteDatabase(RefConfig.Location);
+                _liteDb.DropCollection(RefConfig.Collection);
             }
             catch (Exception ex)
             { throw ex; }

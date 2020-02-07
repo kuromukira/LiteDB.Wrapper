@@ -79,17 +79,13 @@ namespace LiteDB.Wrapper.Test
                 {
                     reference.Insert(_model);
                     await reference.Commit();
-                    using (WrapperModel _inserted = reference.Get(_model._ID))
-                    {
-                        _inserted.Word = DataProvider.Word();
-                        _inserted.Number = DataProvider.Number();
-                        reference.Update(_inserted);
-                        await reference.Commit();
-                        using (WrapperModel _updated = reference.Get(_inserted._ID))
-                        {
-                            VerifyAssertModels(_inserted, _updated);
-                        }
-                    }
+                    using WrapperModel _inserted = reference.Get(_model._ID);
+                    _inserted.Word = DataProvider.Word();
+                    _inserted.Number = DataProvider.Number();
+                    reference.Update(_inserted);
+                    await reference.Commit();
+                    using WrapperModel _updated = reference.Get(_inserted._ID);
+                    VerifyAssertModels(_inserted, _updated);
                 }
                 reference.Drop();
             }
@@ -131,17 +127,13 @@ namespace LiteDB.Wrapper.Test
             try
             {
                 ICollectionRef<WrapperModel> reference = new CollectionReference<WrapperModel>(litedbloc, "delete_collection");
-                using (WrapperModel _model = DataProvider.GetModel())
-                {
-                    reference.Insert(_model);
-                    await reference.Commit();
-                    reference.Remove(_model._ID);
-                    await reference.Commit();
-                    using (WrapperModel _deletedModel = reference.Get(_model._ID))
-                    {
-                        Assert.Null(_deletedModel);
-                    }
-                }
+                using WrapperModel _model = DataProvider.GetModel();
+                reference.Insert(_model);
+                await reference.Commit();
+                reference.Remove(_model._ID);
+                await reference.Commit();
+                using WrapperModel _deletedModel = reference.Get(_model._ID);
+                Assert.Null(_deletedModel);
                 reference.Drop();
             }
             catch (Exception ex)

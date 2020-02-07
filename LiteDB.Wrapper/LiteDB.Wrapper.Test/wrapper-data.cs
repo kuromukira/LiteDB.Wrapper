@@ -42,7 +42,7 @@ namespace LiteDB.Wrapper.Test
 
     internal class WrapperData
     {
-        private Random _random = new Random();
+        private readonly Random _random = new Random();
 
         internal int Number() => _random.Next(0, 9);
 
