@@ -102,6 +102,52 @@ namespace LiteDB.Wrapper
             { throw ex; }
         }
 
+        /// <summary>Get an item from the referenced collection based on a filter.</summary>
+        T ICollectionRef<T>.Get(FilterOptions filter)
+        {
+            try
+            {
+                using LiteDatabase _liteDB = new LiteDatabase(RefConfig.Location);
+                ILiteCollection<T> _collection = _liteDB.GetCollection<T>(RefConfig.Collection);
+                switch (filter.FieldOptions)
+                {
+                    case FilterOptions.Options.LesserThan:
+                        return _collection.FindOne(Query.LT(filter.FieldName, filter.FieldValue));
+                    case FilterOptions.Options.GreaterThan:
+                        return _collection.FindOne(Query.EQ(filter.FieldName, filter.FieldValue));
+                    case FilterOptions.Options.Within:
+                        return _collection.FindOne(Query.In(filter.FieldName, filter.FieldValue));
+                    default:
+                        return _collection.FindOne(Query.EQ(filter.FieldName, filter.FieldValue));
+                }
+            }
+            catch (Exception ex)
+            { throw ex; }
+        }
+
+        /// <summary>Get a paginated list of items from the referenced collection based on a filter.</summary>
+        PagedResult<T> ICollectionRef<T>.GetPaged(FilterOptions filterOptions, PageOptions pageOptions, SortOptions sortOptions)
+        {
+            try
+            {
+                using LiteDatabase _liteDB = new LiteDatabase(RefConfig.Location);
+                ILiteCollection<T> _collection = _liteDB.GetCollection<T>(RefConfig.Collection);
+                switch (filterOptions.FieldOptions)
+                {
+                    case FilterOptions.Options.LesserThan:
+                        return _collection.Find(Query.LT(filterOptions.FieldName, filterOptions.FieldValue));
+                    case FilterOptions.Options.GreaterThan:
+                        return _collection.Find(Query.EQ(filterOptions.FieldName, filterOptions.FieldValue));
+                    case FilterOptions.Options.Within:
+                        return _collection.Find(Query.In(filterOptions.FieldName, filterOptions.FieldValue));
+                    default:
+                        return _collection.Find(Query.EQ(filterOptions.FieldName, filterOptions.FieldValue));
+                }
+            }
+            catch (Exception ex)
+            { throw ex; }
+        }
+
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 

@@ -34,8 +34,14 @@ namespace LiteDB.Wrapper.Interface
         /// <summary>Get an item from the referenced collection.</summary>
         T Get(Guid id);
 
+        /// <summary>Get an item from the referenced collection based on a filter.</summary>
+        T Get(FilterOptions filter);
+
         /// <summary>Get a paginated list of items from the referenced collection.</summary>
         PagedResult<T> GetPaged(PageOptions pageOptions, SortOptions sortOptions);
+
+        /// <summary>Get a paginated list of items from the referenced collection based on a filter.</summary>
+        PagedResult<T> GetPaged(FilterOptions filterOptions, PageOptions pageOptions, SortOptions sortOptions);
 
         /// <summary>Explicitly drop currenct collection.</summary>
         void Drop();
