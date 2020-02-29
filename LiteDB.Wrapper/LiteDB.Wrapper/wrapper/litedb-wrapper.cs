@@ -132,16 +132,18 @@ namespace LiteDB.Wrapper
             {
                 using LiteDatabase _liteDB = new LiteDatabase(RefConfig.Location);
                 ILiteCollection<T> _collection = _liteDB.GetCollection<T>(RefConfig.Collection);
+                _collection.EnsureIndex(sortOptions.Field, true);
+                long _countAll = _liteDB.GetCollection<T>(RefConfig.Collection).Count();
                 switch (filterOptions.FieldOptions)
                 {
                     case FilterOptions.Options.LesserThan:
-                        return _collection.Find(Query.LT(filterOptions.FieldName, filterOptions.FieldValue));
+                        return new PagedResult<T>(_countAll, _collection.Find(Query.LT(filterOptions.FieldName, filterOptions.FieldValue)).ToList());
                     case FilterOptions.Options.GreaterThan:
-                        return _collection.Find(Query.EQ(filterOptions.FieldName, filterOptions.FieldValue));
+                        return new PagedResult<T>(_countAll, _collection.Find(Query.EQ(filterOptions.FieldName, filterOptions.FieldValue)).ToList());
                     case FilterOptions.Options.Within:
-                        return _collection.Find(Query.In(filterOptions.FieldName, filterOptions.FieldValue));
+                        return new PagedResult<T>(_countAll, _collection.Find(Query.In(filterOptions.FieldName, filterOptions.FieldValue)).ToList());
                     default:
-                        return _collection.Find(Query.EQ(filterOptions.FieldName, filterOptions.FieldValue));
+                        return new PagedResult<T>(_countAll, _collection.Find(Query.EQ(filterOptions.FieldName, filterOptions.FieldValue)).ToList());
                 }
             }
             catch (Exception ex)

@@ -17,7 +17,7 @@ namespace LiteDB.Wrapper
         }
 
         /// <summary>Filter the result in the collection</summary>
-        public FilterOptions(string fieldName, Options options, dynamic fieldValue)
+        public FilterOptions(string fieldName, Options options, BsonValue fieldValue)
         {
             FieldName = fieldName;
             FieldValue = fieldValue;
@@ -31,6 +31,6 @@ namespace LiteDB.Wrapper
         public string FieldName { get; set; }
 
         /// <summary>Value of the filter</summary>
-        public dynamic FieldValue { get; set; }
+        public BsonValue FieldValue { get; set; }
     }
 }

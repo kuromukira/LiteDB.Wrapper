@@ -34,8 +34,14 @@
         <member name="M:LiteDB.Wrapper.Interface.ICollectionRef`1.Get(System.Guid)">
             <summary>Get an item from the referenced collection.</summary>
         </member>
+        <member name="M:LiteDB.Wrapper.Interface.ICollectionRef`1.Get(LiteDB.Wrapper.FilterOptions)">
+            <summary>Get an item from the referenced collection based on a filter.</summary>
+        </member>
         <member name="M:LiteDB.Wrapper.Interface.ICollectionRef`1.GetPaged(LiteDB.Wrapper.PageOptions,LiteDB.Wrapper.SortOptions)">
             <summary>Get a paginated list of items from the referenced collection.</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.Interface.ICollectionRef`1.GetPaged(LiteDB.Wrapper.FilterOptions,LiteDB.Wrapper.PageOptions,LiteDB.Wrapper.SortOptions)">
+            <summary>Get a paginated list of items from the referenced collection based on a filter.</summary>
         </member>
         <member name="M:LiteDB.Wrapper.Interface.ICollectionRef`1.Drop">
             <summary>Explicitly drop currenct collection.</summary>
@@ -51,6 +57,36 @@
         </member>
         <member name="M:LiteDB.Wrapper.CollectionReferenceConfig.#ctor(System.String,System.String)">
             <summary></summary>
+        </member>
+        <member name="T:LiteDB.Wrapper.FilterOptions">
+            <summary>Filter the result in the collection</summary>
+        </member>
+        <member name="T:LiteDB.Wrapper.FilterOptions.Options">
+            <summary>Filter Options</summary>
+        </member>
+        <member name="F:LiteDB.Wrapper.FilterOptions.Options.Equals">
+            <summary></summary>
+        </member>
+        <member name="F:LiteDB.Wrapper.FilterOptions.Options.GreaterThan">
+            <summary></summary>
+        </member>
+        <member name="F:LiteDB.Wrapper.FilterOptions.Options.LesserThan">
+            <summary></summary>
+        </member>
+        <member name="F:LiteDB.Wrapper.FilterOptions.Options.Within">
+            <summary></summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.FilterOptions.#ctor(System.String,LiteDB.Wrapper.FilterOptions.Options,LiteDB.BsonValue)">
+            <summary>Filter the result in the collection</summary>
+        </member>
+        <member name="P:LiteDB.Wrapper.FilterOptions.FieldOptions">
+            <summary></summary>
+        </member>
+        <member name="P:LiteDB.Wrapper.FilterOptions.FieldName">
+            <summary>Field name of the filter</summary>
+        </member>
+        <member name="P:LiteDB.Wrapper.FilterOptions.FieldValue">
+            <summary>Value of the filter</summary>
         </member>
         <member name="T:LiteDB.Wrapper.CollectionReference`1">
             <summary></summary>
@@ -87,6 +123,12 @@
         </member>
         <member name="M:LiteDB.Wrapper.CollectionReference`1.LiteDB#Wrapper#Interface#ICollectionRef{T}#Drop">
             <summary>Explicitly drop currenct collection.</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.LiteDB#Wrapper#Interface#ICollectionRef{T}#Get(LiteDB.Wrapper.FilterOptions)">
+            <summary>Get an item from the referenced collection based on a filter.</summary>
+        </member>
+        <member name="M:LiteDB.Wrapper.CollectionReference`1.LiteDB#Wrapper#Interface#ICollectionRef{T}#GetPaged(LiteDB.Wrapper.FilterOptions,LiteDB.Wrapper.PageOptions,LiteDB.Wrapper.SortOptions)">
+            <summary>Get a paginated list of items from the referenced collection based on a filter.</summary>
         </member>
         <member name="M:LiteDB.Wrapper.CollectionReference`1.Dispose(System.Boolean)">
             <summary></summary>
