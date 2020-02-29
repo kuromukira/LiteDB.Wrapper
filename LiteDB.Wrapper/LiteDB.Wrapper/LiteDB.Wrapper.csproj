@@ -10,8 +10,8 @@
     <RepositoryUrl>https://github.com/norgelera/LiteDB.Wrapper</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>litedb lite db wrapper simple nosql</PackageTags>
-    <PackageReleaseNotes>Add FilterOptions to Get and GetPaged</PackageReleaseNotes>
-    <Version>3.0.1</Version>
+    <PackageReleaseNotes>Add NotEqual to FilterOptions</PackageReleaseNotes>
+    <Version>3.0.2</Version>
     <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <FileVersion>3.0.0.0</FileVersion>
   </PropertyGroup>

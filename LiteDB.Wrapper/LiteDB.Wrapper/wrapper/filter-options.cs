@@ -9,6 +9,8 @@ namespace LiteDB.Wrapper
             /// <summary></summary>
             Equals,
             /// <summary></summary>
+            NotEqual,
+            /// <summary></summary>
             GreaterThan,
             /// <summary></summary>
             LesserThan,
