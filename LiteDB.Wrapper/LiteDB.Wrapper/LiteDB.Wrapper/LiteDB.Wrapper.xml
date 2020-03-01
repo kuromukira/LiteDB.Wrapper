@@ -67,6 +67,9 @@
         <member name="F:LiteDB.Wrapper.FilterOptions.Options.Equals">
             <summary></summary>
         </member>
+        <member name="F:LiteDB.Wrapper.FilterOptions.Options.NotEqual">
+            <summary></summary>
+        </member>
         <member name="F:LiteDB.Wrapper.FilterOptions.Options.GreaterThan">
             <summary></summary>
         </member>
