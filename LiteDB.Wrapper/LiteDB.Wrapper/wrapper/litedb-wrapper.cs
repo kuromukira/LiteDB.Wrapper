@@ -114,7 +114,7 @@ namespace LiteDB.Wrapper
                     case FilterOptions.Options.LesserThan:
                         return _collection.FindOne(Query.LT(filter.FieldName, filter.FieldValue));
                     case FilterOptions.Options.GreaterThan:
-                        return _collection.FindOne(Query.EQ(filter.FieldName, filter.FieldValue));
+                        return _collection.FindOne(Query.GT(filter.FieldName, filter.FieldValue));
                     case FilterOptions.Options.Within:
                         return _collection.FindOne(Query.In(filter.FieldName, filter.FieldValue));
                     case FilterOptions.Options.NotEqual:
@@ -141,7 +141,7 @@ namespace LiteDB.Wrapper
                     case FilterOptions.Options.LesserThan:
                         return new PagedResult<T>(_countAll, _collection.Find(Query.LT(filterOptions.FieldName, filterOptions.FieldValue)).ToList());
                     case FilterOptions.Options.GreaterThan:
-                        return new PagedResult<T>(_countAll, _collection.Find(Query.EQ(filterOptions.FieldName, filterOptions.FieldValue)).ToList());
+                        return new PagedResult<T>(_countAll, _collection.Find(Query.GT(filterOptions.FieldName, filterOptions.FieldValue)).ToList());
                     case FilterOptions.Options.Within:
                         return new PagedResult<T>(_countAll, _collection.Find(Query.In(filterOptions.FieldName, filterOptions.FieldValue)).ToList());
                     case FilterOptions.Options.NotEqual:
